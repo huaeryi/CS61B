@@ -8,10 +8,12 @@ public class LinkedListDeque<T> {
     private TNode tail;
     private int size;
 
+    //private TNode dummy;
+
     public class TNode {
-        public T item;
-        public TNode prev;
-        public TNode next;
+        private T item;
+        private TNode prev;
+        private TNode next;
 
         public TNode() { }
 
@@ -70,11 +72,7 @@ public class LinkedListDeque<T> {
      * else return false.
      */
     public boolean isEmpty() {
-        if (size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return size == 0;
     }
 
     /**
@@ -146,6 +144,26 @@ public class LinkedListDeque<T> {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Get the item in the position index, use recursion.
+     */
+
+    public TNode getRecursivehelper(TNode start, int index) {
+        if (index == 0) {
+            return start;
+        } else {
+            return getRecursivehelper(start.next, index - 1);
+        }
+    }
+    public T getRecursive(int index) {
+        if (index >= 0 && index < size()) {
+            return getRecursivehelper(head.next, index).item;
+        } else {
+            return null;
+        }
+
     }
 
 }

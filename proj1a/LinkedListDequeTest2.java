@@ -51,6 +51,8 @@ public class LinkedListDequeTest2 {
         ld.printDeque();
         int x = ld.get(5);
         assertEquals(5, x);
+        int y = ld.getRecursive(5);
+        assertEquals(5, y);
     }
 
 }
