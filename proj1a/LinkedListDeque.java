@@ -90,9 +90,13 @@ public class LinkedListDeque<T> {
     public void printDeque() {
         TNode tmp = head.next;
         for (int i = 0; i < size(); i += 1) {
-            System.out.println(tmp.item);
+            System.out.print(tmp.item);
             tmp = tmp.next;
+            if (i < size() - 1) {
+                System.out.print("->");
+            }
         }
+        System.out.println();
     }
 
     /**
@@ -123,6 +127,7 @@ public class LinkedListDeque<T> {
             TNode tmp = removed.prev;
             tail.prev = tmp;
             tmp.next = tail;
+            size -= 1;
 
             return removed.item;
         }
