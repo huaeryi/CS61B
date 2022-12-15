@@ -21,7 +21,7 @@ public class ArrayDeque<T> {
     /**
      * Resize the array.
      */
-    public void resize(int newCapacity) {
+    private void resize(int newCapacity) {
         T[] newArray = (T[]) new Object[newCapacity];
         int i = first;
         int j = 0;
@@ -50,7 +50,7 @@ public class ArrayDeque<T> {
     /**
      * Check and resize the array.
      */
-    public void checkSize() {
+    private void checkSize() {
         if (size() > capacity / 2) {
             capacity = capacity * 2;
         }

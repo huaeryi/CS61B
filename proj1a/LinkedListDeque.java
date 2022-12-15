@@ -10,7 +10,7 @@ public class LinkedListDeque<T> {
 
     //private TNode dummy;
 
-    public class TNode {
+    private class TNode {
         private T item;
         private TNode prev;
         private TNode next;
@@ -150,7 +150,7 @@ public class LinkedListDeque<T> {
      * Get the item in the position index, use recursion.
      */
 
-    public TNode getRecursivehelper(TNode start, int index) {
+     private TNode getRecursivehelper(TNode start, int index) {
         if (index == 0) {
             return start;
         } else {

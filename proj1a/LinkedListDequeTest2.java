@@ -46,7 +46,7 @@ public class LinkedListDequeTest2 {
 
     @Test
     public void test() {
-        int[] tmp = {1, 2, 3, 4, 4, 5,5,5,55,5,5,5,5,5,5,5,5,5,5};
+        int[] tmp = {1, 2, 3, 4, 4, 5, 6, 4, 321, 234, 56, 45, 54, 32};
         LinkedListDeque<Integer> ld = create(tmp);
         ld.printDeque();
         int x = ld.get(5);
