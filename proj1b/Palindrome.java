@@ -24,7 +24,7 @@ public class Palindrome {
         while (tmp.size() > 1) {
             char first = tmp.removeFirst();
             char last = tmp.removeLast();
-            if (cc.equalChars(first, last)) {
+            if (!cc.equalChars(first, last)) {
                 return false;
             }
         }
