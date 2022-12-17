@@ -11,88 +11,92 @@ public class ArrayDeque<T> {
     private int size;
 
     public ArrayDeque() {
-        capacity = 20;
-        array = (T[]) new Object[20];
-        first = 0;
-        last = 0;
+        capacity = 32;
+        array = (T[]) new Object[capacity];
+        first = capacity / 2;
+        last = capacity / 2;
         size = 0;
     }
 
     /**
      * Resize the array.
      */
-    private void resize(int newCapacity) {
-        T[] newArray = (T[]) new Object[newCapacity];
-        int i = first;
-        int j = 0;
-        if (first < last) {
-            while (i < last) {
-                newArray[j] = array[i];
-                i += 1;
-                j += 1;
-            }
-        } else {
-            while (i < last || i <= capacity) {
-                if (i == capacity) {
-                    i = 0;
-                }
-                newArray[j] = array[i];
-                i += 1;
-                j += 1;
-            }
+    private void grow() {
+        T[] newArray = (T[]) new Object[capacity * 2];
+        int p1 = first;
+        int p2 = capacity;
+        while (p1 != last) {
+            newArray[p2] = array[p1];
+            p1 = addOne(p1, capacity);
+            p2 = addOne(p2, capacity * 2);
         }
-        first = 0;
-        last = j + 1;
-        capacity = newCapacity;
+        first = capacity;
+        last = p2;
         array = newArray;
+        capacity = capacity * 2;
+    }
+
+    private void reduce() {
+        T[] newArray = (T[]) new Object[capacity / 2];
+        int p1 = first;
+        int p2 = capacity;
+        while (p1 != last) {
+            newArray[p2] = array[p1];
+            p1 = addOne(p1, capacity);
+            p2 = addOne(p2, capacity / 2);
+        }
+        first = capacity / 4;
+        last = p2;
+        array = newArray;
+        capacity = capacity / 2;
+    }
+
+
+
+    /**
+     * Add one in the array.
+     */
+    private int addOne(int index, int cap) {
+        index = index % cap;
+        if (index == cap - 1) {
+            return 0;
+        } else {
+            return index + 1;
+        }
     }
 
     /**
-     * Check and resize the array.
+     * Minus one in the array.
      */
-    private void checkSize() {
-        if (size() > capacity / 2) {
-            capacity = capacity * 2;
+    private int minusOne(int index) {
+        if (index == 0) {
+            return capacity - 1;
         }
-        if (size() < capacity / 4) {
-            capacity = capacity / 2;
-        }
-        if (capacity < 20) {
-            capacity = 20;
-        }
+        return index - 1;
     }
 
     /**
      * Add item to the first.
      */
     public void addFirst(T item) {
-        checkSize();
-        if (first > 0) {
-            first = first - 1;
-            array[first] = item;
-            size += 1;
-        } else {
-            first = capacity - 1;
-            array[first] = item;
-            size += 1;
+        if (size() == capacity - 1) {
+            grow();
         }
+        first = minusOne(first);
+        array[first] = item;
+        size += 1;
     }
 
     /**
      * Add item to the last.
      */
     public void addLast(T item) {
-        checkSize();
-        if (last < capacity) {
-            array[last] = item;
-            last = last + 1;
-            size += 1;
-        } else {
-            last = 0;
-            array[last] = item;
-            last = last + 1;
-            size += 1;
+        if (size() == capacity - 1) {
+            grow();
         }
+        array[last] = item;
+        last = addOne(last, capacity);
+        size += 1;
     }
 
     /**
@@ -127,15 +131,14 @@ public class ArrayDeque<T> {
      * Remove the first item of deque.
      */
     public T removeFirst() {
-        checkSize();
+        if (capacity > 32 && capacity / 4 >= size) {
+            reduce();
+        }
         if (size() == 0) {
             return null;
         } else {
             T tmp = array[first];
-            first += 1;
-            if (first == capacity) {
-                first = 0;
-            }
+            first = addOne(first, capacity);
             size -= 1;
             return tmp;
         }
@@ -145,15 +148,14 @@ public class ArrayDeque<T> {
      * Remove the last item of deque.
      */
     public T removeLast() {
-        checkSize();
+        if (capacity > 32 && capacity / 4 >= size) {
+            reduce();
+        }
         if (size() == 0) {
             return null;
         } else {
-            if (last == 0) {
-                last = capacity;
-            }
-            T tmp = array[last - 1];
-            last = last - 1;
+            T tmp = array[minusOne(last)];
+            last = minusOne(last);
             size -= 1;
             return tmp;
         }
