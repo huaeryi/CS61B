@@ -136,7 +136,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
-
         int child = minchild(index);
         while (child != -1 && min(index, child) == child) {
             swap(index, child);
@@ -159,8 +158,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         /* TODO: Your code here! */
         Node tmp = new Node(item, priority);
         int index = size + 1;
-        contents[index] = tmp;
         size += 1;
+        contents[index] = tmp;
         swim(index);
     }
 
@@ -213,7 +212,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
-        return;
+        for (int i = 1; i < size + 1; i += 1) {
+            if (item.equals(contents[i].myItem)) {
+                contents[i].myPriority = priority;
+                swim(i);
+                sink(i);
+            }
+        }
     }
 
     /**
