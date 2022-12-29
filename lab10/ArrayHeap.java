@@ -213,12 +213,14 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
         for (int i = 1; i < size + 1; i += 1) {
-            if (item.equals(contents[i].myItem)) {
+            if (item.equals(contents[i].item())) {
                 contents[i].myPriority = priority;
                 swim(i);
                 sink(i);
+                return;
             }
         }
+        throw new IllegalArgumentException("no such item in the heap");
     }
 
     /**
