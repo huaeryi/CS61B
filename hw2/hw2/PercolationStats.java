@@ -14,10 +14,11 @@ public class PercolationStats {
         }
         size = N;
         count = T;
-        lab = pf.make(size);
+
         data = new double[size];
 
         for (int i = 0; i < count; i += 1) {
+            lab = pf.make(size);
             int[] operation = edu.princeton.cs.algs4.StdRandom.permutation(size * size);
             int j = 0;
             while (!lab.percolates() && j < size * size) {
@@ -27,8 +28,7 @@ public class PercolationStats {
                 lab.open(r, c);
                 j += 1;
             }
-            data[i] = (double) lab.numberOfOpenSites() / (double)(size * size);
-            lab = pf.make(size);
+            data[i] = (double)lab.numberOfOpenSites() / (double)(size * size);
         }
     }
 
@@ -55,12 +55,5 @@ public class PercolationStats {
         return mean() + (1.96 * stddev()) / Math.sqrt(count);
     }
 
-    public static void main(String[] args) {
-        PercolationStats test = new PercolationStats(16, 10, new PercolationFactory());
-        System.out.println(test.mean());
-        System.out.println(test.stddev());
-        System.out.println(test.confidenceLow());
-        System.out.println(test.confidenceHigh());
-    }
 
 }
