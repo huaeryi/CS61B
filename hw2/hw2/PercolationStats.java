@@ -4,7 +4,6 @@ public class PercolationStats {
 
     private int size;
     private int count;
-    private Percolation lab;
     private double[] data;
 
     // perform T independent experiments on an N-by-N grid
@@ -18,7 +17,7 @@ public class PercolationStats {
         data = new double[size];
 
         for (int i = 0; i < count; i += 1) {
-            lab = pf.make(size);
+            Percolation lab = pf.make(size);
             int[] operation = edu.princeton.cs.algs4.StdRandom.permutation(size * size);
             int j = 0;
             while (!lab.percolates() && j < size * size) {
