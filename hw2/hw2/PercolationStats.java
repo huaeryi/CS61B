@@ -14,7 +14,7 @@ public class PercolationStats {
         size = N;
         count = T;
 
-        data = new double[size];
+        data = new double[count];
 
         for (int i = 0; i < count; i += 1) {
             Percolation lab = pf.make(size);
