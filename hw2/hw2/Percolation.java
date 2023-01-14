@@ -36,7 +36,7 @@ public class Percolation {
     /**
      * open the site (row, col) if it is not open already
      */
-    public boolean isOpenhelper(int row, int col) {
+    private boolean isOpenhelper(int row, int col) {
         if (!isLegal(row, col)) {
             return false;
         }
@@ -129,6 +129,12 @@ public class Percolation {
 
     private int index(int i, int j) {
         return size * i + j;
+    }
+
+    public static void main(String[] args) {
+        Percolation t = new Percolation(3);
+        t.open(2, 1);
+        System.out.println(t.numberOfOpenSites());
     }
 
 }
